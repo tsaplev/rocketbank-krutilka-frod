@@ -27,7 +27,6 @@ class App extends Component {
   }
 
   getSmsVerificationCode(phoneNumber) {
-    alert(phoneNumber);
     axios.post('https://rocketbank.ru/api/marketing/orders/rocketpowergame', { 'phone': phoneNumber }).then((res) => {
         if(res.data.sms_verification) {
           this.updateState('smsVerificationCode', res.data.sms_verification);
