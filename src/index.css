@@ -1,5 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
+  background: #000;
+}
+
+.btn-primary {
+  background: #3a3db8;
+  border-color: transparent;
+}
+
+.btn-primary :hover {
+  background: #3a3db8;
+  border-color: transparent;
+}
+
+.App {
+  color: white;
+  margin-top: 5rem;
 }
