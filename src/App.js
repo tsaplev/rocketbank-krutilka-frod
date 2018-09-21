@@ -51,10 +51,14 @@ class App extends Component {
 
   saveScore() {
     axios.patch(`https://rocketbank.ru/api/marketing/orders/rocketpowergame/${this.state.userToken}/save_score`, {'score': this.state.scoreHash}).then((res) => {
+        if(res.data.additional_attributes.cool_hacker === true) {
+          return alert('Упс! Нас спалили 😢');
+        }
+
         if(res.data.result === 'ok') {
           alert('😎');
         } else {
-          alert('Упс! Что-то пошло не так.');
+          alert('Упс! Что-то пошло не так.' + '\n' + `Сообщение от Рокетбанка: ${res.data.error}`);
         }
     });
   }
@@ -84,7 +88,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="App container">
       <div className="row">
@@ -94,7 +97,7 @@ class App extends Component {
             <form onSubmit={(e) => {this.handleSubmit(e, 'phone')}}>
               <div className="form-group">
                 <label htmlFor="phone">Номер телефона</label>
-                <input type="numbers" className="form-control" id="phone" name="phone" placeholder="+7 (000) 000-00-00"  mask="+7 (999) 999-99-99"/>
+                <input type="numbers" className="form-control" id="phone" name="phone" placeholder="+7 (000) 000-00-00"  mask="+7 (999) 999-99-99" required/>
               </div>
               <button type="submit" className="btn btn-primary btn-next">Дальше</button>
             </form>
@@ -105,7 +108,7 @@ class App extends Component {
             <form onSubmit={(e) => {this.handleSubmit(e, 'code')}}>
               <div className="form-group">
                 <label htmlFor="code">Код из СМС</label>
-                <input type="numbers" className="form-control" id="code" name="code"/>
+                <input type="numbers" className="form-control" id="code" name="code" required/>
               </div>
               <button type="submit" className="btn btn-primary">Далее</button>
             </form>
@@ -116,7 +119,7 @@ class App extends Component {
             <form onSubmit={(e) => {this.handleSubmit(e, 'score')}}>
               <div className="form-group">
                 <label htmlFor="score">Кол-во очков:</label>
-                <input type="number" className="form-control" id="score" name="score"/>
+                <input type="number" max="99999999" className="form-control" id="score" name="score" placeholder="148822869" required/>
               </div>
               <button type="submit" className="btn btn-primary">Накрутить!</button>
             </form>
