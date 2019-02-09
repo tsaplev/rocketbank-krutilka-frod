@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import hashScore from './hasher';
 import axios from 'axios';
-const errorMsg = 'Упс! Что-то пошло не так.';
-
 import './index.css';
+
+const errorMsg = 'Упс! Что-то пошло не так.';
 
 class App extends Component {
   constructor(props) {
@@ -50,7 +50,6 @@ class App extends Component {
       if (res.data.additional_attributes.cool_hacker === true) {
         return alert('Упс! Нас спалили 😢');
       }
-
       if (res.data.result === 'ok') {
         alert('😎');
       } else {
