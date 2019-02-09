@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import hashScore from './hasher';
 import axios from 'axios';
+const errorMsg = 'Упс! Что-то пошло не так.';
 
 import './index.css';
 
@@ -27,7 +28,7 @@ class App extends Component {
       if (res.data.sms_verification) {
         this.setState({ 'smsVerificationCode': res.data.sms_verification });
       } else {
-        alert('Упс! Что-то пошло не так.');
+        alert(errorMsg);
       }
     });
   }
@@ -39,7 +40,7 @@ class App extends Component {
           localStorage.setItem('token', this.state.userToken);
         });
       } else {
-        alert('Упс! Что-то пошло не так.');
+        alert(errorMsg);
       }
     });
   }
@@ -53,7 +54,7 @@ class App extends Component {
       if (res.data.result === 'ok') {
         alert('😎');
       } else {
-        alert('Упс! Что-то пошло не так.' + '\n' + `Сообщение от Рокетбанка: ${res.data.error}`);
+        alert(errorMsg + '\n' + `Сообщение от Рокетбанка: ${res.data.error}`);
       }
     });
   }
@@ -77,7 +78,7 @@ class App extends Component {
         });
         break;
       default:
-        alert('Что-то пошло не так!');
+        alert(errorMsg);
         break;
     }
   }
