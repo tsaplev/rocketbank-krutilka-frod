@@ -18,18 +18,14 @@ class App extends Component {
 
   componentDidMount() {
     if(localStorage.getItem('token')) {
-      this.updateState('userToken', localStorage.getItem('token'));
+      this.setState({ userToken: localStorage.getItem('token')});
     }
-  }
-
-  updateState(key, value, cb = null) {
-    this.setState(prevState => ({...prevState, [key]: value}), cb);
   }
 
   getSmsVerificationCode(phoneNumber) {
     axios.post('https://rocketbank.ru/api/marketing/orders/rocketpowergame', { 'phone': phoneNumber }).then((res) => {
         if(res.data.sms_verification) {
-          this.updateState('smsVerificationCode', res.data.sms_verification);
+          this.setState({'smsVerificationCode': res.data.sms_verification});
         } else {
           alert('Упс! Что-то пошло не так.');
         }
@@ -39,7 +35,7 @@ class App extends Component {
   getUserToken() {
     axios.patch('https://rocketbank.ru/api/marketing/orders/rocketpowergame/confirm', { 'sms_verification': this.state.smsVerificationCode, 'code': this.state.phoneCode }).then((res) => {
         if(res.data.token) {
-          this.updateState('userToken', res.data.token, () => {
+          this.setState({ userToken: res.data.token }, () => {
             localStorage.setItem('token', this.state.userToken);
           });
         } else {
@@ -66,17 +62,17 @@ class App extends Component {
     event.preventDefault();
     switch (type) {
       case 'phone':
-        this.updateState('phoneNumber', event.target.elements.phone.value, () => {
+        this.setState({ phoneNumber: event.target.elements.phone.value }, () => {
           this.getSmsVerificationCode(this.state.phoneNumber);
         });
         break;
       case 'code':
-        this.updateState('phoneCode', event.target.elements.code.value, () => {
+        this.setState({ phoneCode: event.target.elements.code.value }, () => {
           this.getUserToken(this.state.smsVerificationCode, this.state.phoneCode);
         });
         break;
       case 'score':
-        this.updateState('scoreHash', hashScore(event.target.elements.score.value), () => {
+        this.setState({ scoreHash: hashScore(event.target.elements.score.value) }, () => {
           this.saveScore();
         });
         break;
